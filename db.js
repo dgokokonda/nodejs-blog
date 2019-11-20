@@ -11,6 +11,6 @@ module.exports = () => {
       .on("close", () => console.log("Database connection closed"))
       .once("open", () => resolve(mongoose.connections[0]));
 
-    mongoose.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
   });
 };

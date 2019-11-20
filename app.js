@@ -1,17 +1,21 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require('path');
-const Post = require('./models/post');
+const { Post } = require('./models');
+const routes = require('./routes');
 
 const app = express();
 
 app.set("view engine", "ejs"); // работает с папкой views
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); // обработка данных ajax-запросов в /routes
 app.use(express.static(path.join(__dirname, 'public'))); // конфиг доступа к файлам разработки
 app.use(
   '/js',
   express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist'))
 ); // jquery config + footer's jquery file connect
+app.use('/ajax', routes.auth);
+
 
 app.get("/", (req, res) => {
   // получение данных коллекции из бд

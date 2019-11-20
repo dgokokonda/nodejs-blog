@@ -220,6 +220,19 @@ input::placeholder, textarea::placeholder {
     font-style: italic;
 }
 
+input.error, textarea.error {
+    border: 1px solid #ff2222;
+}
+form {
+    line-height: 36px;
+}
+
+form p.error {
+    color: #ff2222;
+    font-weight: bold;
+    margin: 0;
+}
+
 input {
     height: 36px;
 }
