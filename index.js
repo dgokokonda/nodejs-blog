@@ -12,5 +12,6 @@ db()
   })
   .catch(err => {
     console.log("err", err);
+    /*eslint no-process-exit: 1*/
     process.exit();
   });

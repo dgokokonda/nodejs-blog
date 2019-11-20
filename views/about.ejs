@@ -1,0 +1,14 @@
+<% include layout/header.ejs %>
+
+    <h1>About page</h1>
+    <ul>
+        <% posts.forEach(function(it) { %>
+            <li>
+                <span><b><%= it.title %>:</b></span>
+                <span><%= it.body %></span>
+            </li>
+        <% }) %>
+        
+    </ul>
+
+<% include layout/footer.ejs %>

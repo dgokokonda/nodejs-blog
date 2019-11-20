@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Main page</title>
+    <link rel="stylesheet" href="/css/base.css" type="text/css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo-block">
+                <span>Nodejs Blog</span>
+                <a href="/" class="logo">
+                    <img src="../img/logo.png" alt="logo">
+                </a>
+            </div>
+
+            <% include nav.ejs %>
+            <ul class="menu">
+                <li>
+                    <a href="/">Hello</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <style>
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 49px;
+            font-size: 15px;
+            background-color: #08aef1;
+            opacity: 0.9;
+            z-index: 1000;
+        }
+
+        .container {
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        .nav a {
+            color: #ffffff;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+
+        .logo-block {
+            height: 49px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-block span {
+            margin-right: 15px;
+            color: #ffffff;
+            font-size: 26px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-top: 3px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .menu {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .menu li a {
+            color: #ffffff;
+        }
+    </style>
+    <div class="wrapper">
