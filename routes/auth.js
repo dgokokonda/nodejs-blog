@@ -12,6 +12,12 @@ router.post('/register', (req, res) => {
             error: 'Все поля должны быть заполнены!',
             fields: ['reg-login', 'reg-pass', 'reg-pass-confirm']
         });
+    } else if (!/^[a-z\d_-]*$/i.test(login)) {
+        res.json({
+            ok: false,
+            error: 'Логин может содержать только символы латиницы, цифр, дефиса и нижнего подчеркивания!',
+            fields: ['reg-login']
+        });
     } else if (login.length < 3 || login.length > 16) {
         res.json({
             ok: false,
@@ -24,6 +30,12 @@ router.post('/register', (req, res) => {
             error: 'Пароли не совпадают!',
             fields: ['reg-pass', 'reg-pass-confirm']
         })
+    } else if (password.length < 6) {
+        res.json({
+            ok: false,
+            error: 'Длина пароля не менее 6 символов!',
+            fields: ['reg-pass']
+        });
     } else {
         // используем модель юзера
         User.findOne({ // вынужденная проверка на уникальный логин в базе, т.к. unique:true не срабатывает
@@ -57,6 +69,55 @@ router.post('/register', (req, res) => {
                 })
             }
         });
+    }
+});
+
+router.post('/auth', (req, res) => {
+    const { login, password } = req.body;
+
+    if (!login || !password) {
+        res.json({
+            ok: false,
+            error: 'Все поля должны быть заполнены!',
+            fields: ['auth-login', 'auth-pass']
+        });
+    } else {
+        User.findOne({
+            login
+        })
+            .then(user => {
+                if (!user) {
+                    // Пользователя с таким логином не существует
+                    res.json({
+                        ok: false,
+                        error: 'Логин и пароль неверны!',
+                        fields: ['auth-login', 'auth-pass']
+                    });
+                } else {
+                    // проверка валидности пароля
+                    // arguments of password field value, hash from db, callback:
+                    bcrypt.compare(password, user.password, (err, valid) => {
+                        if (!valid) {
+                            res.json({
+                                ok: false,
+                                error: 'Логин и пароль неверны!',
+                                fields: ['auth-login', 'auth-pass']
+                            });
+                        } else {
+                            res.json({
+                                ok: true
+                            });
+                        }
+                    });
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                res.json({
+                    ok: false,
+                    error: 'Ошибка, попробуйте позже!'
+                });
+            });
     }
 });
 

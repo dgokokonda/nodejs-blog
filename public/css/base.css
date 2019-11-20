@@ -231,6 +231,7 @@ form p.error {
     color: #ff2222;
     font-weight: bold;
     margin: 0;
+    line-height: 18px;
 }
 
 input {
