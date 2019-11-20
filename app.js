@@ -5,8 +5,8 @@ const mongoose = require("mongoose");
 const config = require('./config');
 const { Post } = require('./models');
 const routes = require('./routes');
-// const session = require('express-session');
-// const MongoStore = require('connect-mongo')(session);
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 // database
 mongoose.Promise = global.Promise;
@@ -25,6 +25,18 @@ mongoose.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: 
 // express
 const app = express();
 
+// sessions
+app.use(
+  session({
+    secret: config.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: false,
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection
+    })
+  })
+);
+
 // sets and uses
 app.set("view engine", "ejs"); // работает с папкой views
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -39,9 +51,12 @@ app.use('/ajax', routes.auth);
 
 // routes
 app.get("/", (req, res) => {
-  // получение данных коллекции из бд
-  Post.find({}).then(posts => {
-    res.render("index", { posts });
+// передаем данные из сессии
+  res.render("index", {
+    user: {
+      user: req.session.userId,
+      login: req.session.userLogin
+    }
   });
 });
 

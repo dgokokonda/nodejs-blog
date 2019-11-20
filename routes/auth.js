@@ -48,7 +48,8 @@ router.post('/register', (req, res) => {
                         password: hash
                     })
                         .then(user => {
-                            console.log(user);
+                            req.session.userId = user.id;
+                            req.session.userLogin = user.login;
                             res.json({
                                 ok: true
                             });
@@ -72,7 +73,7 @@ router.post('/register', (req, res) => {
     }
 });
 
-router.post('/auth', (req, res) => {
+router.post('/login', (req, res) => {
     const { login, password } = req.body;
 
     if (!login || !password) {
@@ -104,6 +105,9 @@ router.post('/auth', (req, res) => {
                                 fields: ['auth-login', 'auth-pass']
                             });
                         } else {
+                            // вносим данные в сессии (храним в БД)
+                            req.session.userId = user.id;
+                            req.session.userLogin = user.login;
                             res.json({
                                 ok: true
                             });
@@ -120,5 +124,15 @@ router.post('/auth', (req, res) => {
             });
     }
 });
+
+router.get('/logout', (req, res) => {
+    if (req.session) {
+        req.session.destroy(() => {
+            res.redirect('/')
+        });
+    } else {
+        res.redirect('/')
+    }
+})
 
 module.exports = router;

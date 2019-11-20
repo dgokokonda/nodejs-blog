@@ -1,7 +1,7 @@
 $(function () {
     function resetForms() {
-        $('.box form input').val('').removeClass('error');
-        $('.box form p').remove();
+        $('.box form input.error').val('').removeClass('error');
+        $('.box form p.error').remove();
     }
 
     function validateForm(data) {
@@ -18,6 +18,7 @@ $(function () {
             form.find('p').remove();
             resetForms();
         }
+        return data.ok;
     }
 
     $('.js-reg, .js-auth').click(function (e) {
@@ -49,7 +50,11 @@ $(function () {
             contentType: 'application/json',
             url: '/ajax/register'
         }).done(function (data) {
-            validateForm.call(el, data);
+            const success = validateForm.call(el, data);
+
+            if (success) {
+                $(location).attr('href', '/')
+            }
         });
     });
 
@@ -67,9 +72,13 @@ $(function () {
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
-            url: '/ajax/auth',
+            url: '/ajax/login',
         }).done(function (data) {
-            validateForm.call(el, data);
+            const success = validateForm.call(el, data);
+
+            if (success) {
+                $(location).attr('href', '/')
+            }
         });
     });
 });
