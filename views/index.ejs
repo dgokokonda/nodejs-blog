@@ -4,27 +4,7 @@
         <h1>Posts</h1>
         <div class="container">
             <div class="content">
-                <% if (posts) { %>
-                    <% posts.forEach(function(post) { %>
-                        <div class="post">
-                            <div class="top">
-                                <h2><%= post.title %></h2>
-                            </div>
-                            <div class="body">
-                                <p>
-                                <%= post.body %>
-                            </p>
-                            </div>
-                            <div class="bottom">
-                                <div class="author">
-                                Автор:
-                                <a href="/">Гедеван</a>
-                                </div>
-                                <a href="/">Комментарии</a>
-                            </div>
-                        </div>
-                    <% }) %>
-                <% } %>
+                <% include blog.ejs %>
             </div>
             <% include layout/sidebar.ejs %>
         </div>

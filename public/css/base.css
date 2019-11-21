@@ -167,6 +167,10 @@ small, .font_small {
     }
 }
 
+.box .line {
+    display: inline-block;
+}
+
 /* form styles */
 
 .container form {

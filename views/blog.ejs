@@ -1,0 +1,21 @@
+<% if (posts) { %>
+    <% posts.forEach(function(post) { %>
+        <div class="post">
+            <div class="top">
+                <h2><%= post.title %></h2>
+            </div>
+            <div class="body">
+                <p>
+                <%= post.body %>
+            </p>
+            </div>
+            <div class="bottom">
+                <div class="author">
+                Автор:
+                <a href="/"><%= post.author %></a>
+                </div>
+                <a href="/">Комментарии</a>
+            </div>
+        </div>
+    <% }) %>
+<% } %>

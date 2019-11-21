@@ -6,7 +6,7 @@ const { Post } = require('../models');
 router.get('/add', (req, res) => {
     res.render('post/add.ejs', {
         user: {
-            user: req.session.userId,
+            id: req.session.userId,
             login: req.session.userLogin
         }
     });
@@ -41,7 +41,8 @@ router.post('/publish', (req, res) => {
     } else {
         Post.create({
             title: title.trim().replace(/ +(?= )/g, ''),
-            body: turndownService.turndown(htmlData)
+            body: turndownService.turndown(htmlData),
+            author: req.session.userId
         })
             .then(post => {
                 console.log(post)

@@ -11,6 +11,10 @@ const schema = new Schema(
         },
         body: {
             type: String,
+        },
+        author: { // user's model id
+            type: Schema.Types.ObjectId,
+            ref: 'User'
         }
     }, 
     {

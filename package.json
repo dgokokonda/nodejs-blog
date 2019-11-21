@@ -27,6 +27,7 @@
     "ejs": "^2.7.2",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
+    "faker": "^4.1.0",
     "jquery": "^3.4.1",
     "medium-editor": "^5.23.3",
     "mongoose": "^5.7.11",

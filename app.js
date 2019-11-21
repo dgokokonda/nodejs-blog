@@ -18,6 +18,7 @@ mongoose.connection
   .once("open", () => {
     const info = mongoose.connections[0];
     console.log(`Connected to ${info.host}:${info.port}/${info.name}`);
+    // require('./mocks')(); // генератор постов
   });
 
 mongoose.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
@@ -82,6 +83,15 @@ app.post("/form", (req, res) => {
   res.redirect("/about");
 });
 
+// catch 404 and forward to error handler
+app.use((req, res) => {
+  const err = new Error('Page Not Found');
+  err.status = 404 || 500;
+  res.render('error', {
+    message: err.message,
+    error: !config.IS_PRODUCTION ? err : {}
+  });
+});
 
 app.listen(config.PORT, () =>
   console.log(`Server is running on port ${config.PORT}`)
