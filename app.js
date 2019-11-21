@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const path = require('path');
 const mongoose = require("mongoose");
 const config = require('./config');
-const { Post } = require('./models');
+const { News, Post } = require('./models');
 const routes = require('./routes');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -47,22 +47,26 @@ app.use(
   express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist'))
 ); // jquery config + footer's jquery file connect
 app.use('/ajax', routes.auth);
+app.use('/post', routes.post);
 
 
 // routes
 app.get("/", (req, res) => {
-// передаем данные из сессии
-  res.render("index", {
-    user: {
-      user: req.session.userId,
-      login: req.session.userLogin
-    }
+  Post.find({}).then(posts => {
+    // передаем данные из сессии
+    res.render("index", {
+      posts,
+      user: {
+        user: req.session.userId,
+        login: req.session.userLogin
+      }
+    });
   });
 });
 
 app.get('/about', (req, res) => {
   // получение данных коллекции из бд
-  Post.find({}).then(posts => {
+  News.find({}).then(posts => {
     res.render("about", { posts });
   });
 });
@@ -71,7 +75,7 @@ app.get("/form", (req, res) => res.render("form"));
 app.post("/form", (req, res) => {
   const { title, body } = req.body;
   // запись в бд
-  Post.create({
+  News.create({
     title,
     body
   }).then(post => console.log(post.id));

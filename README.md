@@ -10,3 +10,6 @@ https://github.com/shaneGirish/bcrypt-nodejs
 Install packages for work with sessions:
 https://github.com/expressjs/session 
 https://github.com/jdesboeufs/connect-mongo
+
+Install post's editor:
+https://github.com/yabwe/medium-editor

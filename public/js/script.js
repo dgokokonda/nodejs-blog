@@ -1,22 +1,30 @@
 $(function () {
-    function resetForms() {
-        $('.box form input.error').val('').removeClass('error');
-        $('.box form p.error').remove();
+    function resetForms(form, reset) {
+        form.find('input.error, div.error').removeClass('error');
+        form.children('p.error').remove();
+        
+        if (reset) {
+            form.find('input.error').val('');
+            form.find('div.error').html('');
+        }
     }
 
     function validateForm(data) {
         const form = $(this).closest('form');
 
         if (!data.ok) {
-            form.find('h2').after('<p class="error">' + data.error + '</p>');
+            if (!form.children('p').length) {
+                form.find('h2').after('<p class="error">' + data.error + '</p>');
+            }
+            
             if (data.fields) {
                 data.fields.forEach(function (item) {
-                    form.find('input[name=' + item + ']').addClass('error');
+                    form.find('#' + item).addClass('error');
                 });
             }
         } else {
-            form.find('p').remove();
-            resetForms();
+            form.children('p').remove();
+            resetForms(form);
         }
         return data.ok;
     }
@@ -29,8 +37,11 @@ $(function () {
 
     // clear
     $('input').on('focus', function () {
-        $('p.error').remove();
-        $('input').removeClass('error');
+        resetForms($(this).closest('form'), false);
+    });
+
+    $('.form-group').on('click', function () {
+        resetForms($(this).closest('form'), false);
     });
 
     // register
@@ -78,6 +89,57 @@ $(function () {
 
             if (success) {
                 $(location).attr('href', '/')
+            }
+        });
+    });
+
+    // MediumEditor
+    const  editor = new MediumEditor('#post-body', {
+        placeholder: {
+            text: '',
+            hideOnClick: true
+        }
+    });
+
+    // save to draft
+    $('.js-save-post').on('click', function(e) {
+        e.preventDefault();
+        var self = this;
+        var data = {
+            title: $('#post-title').val(),
+            body: $('#post-body').text(),
+            htmlData: $('#post-body').html()
+        };
+
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            url: '/post/save'
+        }).done(function(data) {
+            console.log(data)
+            const success = validateForm.call(self, data);
+        })
+    });
+    // publish post
+    $('.js-publish-post').on('click', function(e) {
+        e.preventDefault();
+        var self = this;
+        var data = {
+            title: $('#post-title').val(),
+            body: $('#post-body').text(),
+            htmlData: $('#post-body').html()
+        };
+
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            url: '/post/publish'
+        }).done(function(data) {
+            const success = validateForm.call(self, data);
+            if (success) {
+                $(location).attr('href', '/');
             }
         });
     });

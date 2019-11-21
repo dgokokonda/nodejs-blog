@@ -4,70 +4,29 @@
         <h1>Posts</h1>
         <div class="container">
             <div class="content">
-                <div class="post">
-                    <div class="top">
-                        <h2>Заголовок поста</h2>
-                    </div>
-                    <div class="body">
-                        <p>
-                        «Кин-дза-дза́!» — полнометражный двухсерийный трагикомедийный художественный фильм в жанре антиутопии, снятый на киностудии «Мосфильм» в 1986 году режиссёром Георгием Данелией. Картина «Кин-дза-дза!» оказала влияние на современную русскоязычную культуру — вымышленные слова.
-                    </p>
-                    </div>
-                    <div class="bottom">
-                        <div class="author">
-                        Автор:
-                        <a href="/">Гедеван</a>
+                <% if (posts) { %>
+                    <% posts.forEach(function(post) { %>
+                        <div class="post">
+                            <div class="top">
+                                <h2><%= post.title %></h2>
+                            </div>
+                            <div class="body">
+                                <p>
+                                <%= post.body %>
+                            </p>
+                            </div>
+                            <div class="bottom">
+                                <div class="author">
+                                Автор:
+                                <a href="/">Гедеван</a>
+                                </div>
+                                <a href="/">Комментарии</a>
+                            </div>
                         </div>
-                        <a href="/">Комментарии</a>
-                    </div>
-                </div>
+                    <% }) %>
+                <% } %>
             </div>
-            <div class="sidebar">
-                <div class="box auth">
-                    <% if (!user.id && !user.login) { %>
-                        <form method="post" name="auth">
-                            <h2>Вход</h2>
-                            <div class="form-group">
-                                <label for="auth-login">Логин</label>
-                                <input type="text" id="auth-login" name="auth-login" />
-                            </div>
-                            <div class="form-group">
-                                <label for="auth-pass">Пароль</label>
-                                <input type="password" id="auth-pass" name="auth-pass" />
-                            </div>
-                            <div class="btns">
-                                <button class="button button--left js-reg">Регистрация</button>
-                                <button class="button button--right js-confirm-auth">Войти</button>
-                            </div>
-                        </form>
-                        <form method="post" name="reg">
-                            <h2>Регистрация</h2>
-                            <div class="form-group">
-                                <label for="reg-login">Логин</label>
-                                <input type="text" id="reg-login" name="reg-login" />
-                            </div>
-                            <div class="form-group">
-                                <label for="reg-pass">Пароль</label>
-                                <input type="password" id="reg-pass" name="reg-pass" />
-                            </div>
-                            <div class="form-group">
-                                <label for="reg-pass-confirm">Повтор пароля</label>
-                                <input type="password" id="reg-pass-confirm" name="reg-pass-confirm" />
-                            </div>
-                            <div class="btns">
-                                <button class="button button--left js-auth">Авторизация</button>
-                                <button class="button button--right js-confirm-reg">Создать</button>
-                            </div>
-                        </form>
-                    <% } else { %>
-                        <div class="success">
-                            <p>Hello, <%= user.login %></p>
-                            <a href="/ajax/logout">Выйти</a>
-                        </div>
-                    <% } %>
-                </div>
-                <div class="box">box2</div>
-            </div>
+            <% include layout/sidebar.ejs %>
         </div>
     </div>
     
