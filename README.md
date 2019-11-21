@@ -13,3 +13,8 @@ https://github.com/jdesboeufs/connect-mongo
 
 Install post's editor:
 https://github.com/yabwe/medium-editor
+
+Install packages for posts'text transformation:
+https://github.com/domchristie/turndown
+https://github.com/talha-asad/mongoose-url-slugs
+https://github.com/vladzadvorny/transliter

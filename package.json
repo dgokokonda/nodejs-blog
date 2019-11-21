@@ -29,6 +29,9 @@
     "express-session": "^1.17.0",
     "jquery": "^3.4.1",
     "medium-editor": "^5.23.3",
-    "mongoose": "^5.7.11"
+    "mongoose": "^5.7.11",
+    "mongoose-url-slugs": "^1.0.2",
+    "transliter": "^2.2.1",
+    "turndown": "^5.0.3"
   }
 }

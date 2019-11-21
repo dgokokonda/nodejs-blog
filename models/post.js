@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const URLSlugs = require('mongoose-url-slugs');
+const transliter = require('transliter');
 
 const schema = new Schema(
     {
@@ -14,6 +16,14 @@ const schema = new Schema(
     {
         timestamps: true
     }    
+);
+
+// add post's identificator by url
+schema.plugin(
+    URLSlugs('title', {
+        field: 'url',
+        generator: text => transliter.slugify(text)
+    })
 );
 
 schema.set('toJSON', {

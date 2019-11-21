@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const TurndownService = require('turndown');
 const { Post } = require('../models');
 
 router.get('/add', (req, res) => {
@@ -17,7 +18,8 @@ router.get('/add', (req, res) => {
 
 router.post('/publish', (req, res) => {
     const { title, body, htmlData } = req.body;
-    console.log(body, body.length)
+    const turndownService = new TurndownService();
+
     if (!title || !body) {
         res.json({
             ok: false,
@@ -38,8 +40,8 @@ router.post('/publish', (req, res) => {
         });
     } else {
         Post.create({
-            title,
-            body: htmlData
+            title: title.trim().replace(/ +(?= )/g, ''),
+            body: turndownService.turndown(htmlData)
         })
             .then(post => {
                 console.log(post)
