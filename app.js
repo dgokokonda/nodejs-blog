@@ -47,24 +47,12 @@ app.use(
   '/js',
   express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist'))
 ); // jquery config + footer's jquery file connect
+
+app.use('/', routes.journal);
 app.use('/ajax', routes.auth);
 app.use('/post', routes.post);
 
-
 // routes
-app.get("/", (req, res) => {
-  Post.find({}).then(posts => {
-    // передаем данные из сессии
-    res.render("index", {
-      posts,
-      user: {
-        user: req.session.userId,
-        login: req.session.userLogin
-      }
-    });
-  });
-});
-
 app.get('/about', (req, res) => {
   // получение данных коллекции из бд
   News.find({}).then(posts => {

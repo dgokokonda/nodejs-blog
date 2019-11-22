@@ -1,0 +1,29 @@
+<div class="pagination">
+    <% if (pages) { %>
+        <% if (currentPage > 2) { %>
+        <a class="new pageLimit" href="/page=<%= Number(currentPage) - 1 %>">← К новым записям</a>
+        <% } %>
+
+        <% if (currentPage == 1) { %>
+        <div class="empty-space"></div>
+        <% } %>
+
+        <% if (currentPage == 2) { %>
+        <a class="new pageLimit" href="/">← К новым записям</a>
+        <% } %>
+
+        <% for (let page=1; page <= pages; page++) { %>
+        <a class="page <%= currentPage == page ? 'page--active' : '' %>"
+            href="<%= page == 1 ? '/' : '/page=' + page %>"><%= page %></a>
+        <% } %>
+
+        <% if (pages > 0 && currentPage < pages) { %>
+        <a class="old pageLimit" href="/page=<%= Number(currentPage) + 1 %>">К старым записям →</a>
+        <% } %>
+
+        <% if (currentPage == pages) { %>
+        <div class="empty-space"></div>
+        <% } %>
+    <% } %>
+
+</div>

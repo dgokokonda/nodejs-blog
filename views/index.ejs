@@ -1,14 +1,16 @@
 <% include layout/header.ejs %>
 
-    <div class="main">
-        <h1>Posts</h1>
-        <div class="container">
-            <div class="content">
-                <% include blog.ejs %>
-            </div>
-            <% include layout/sidebar.ejs %>
+<div class="main">
+    <h1>Posts</h1>
+    <div class="container">
+        <div class="content">
+            <% include layout/pagination.ejs %>
+            <% include blog.ejs %>
+            <% include layout/pagination.ejs %>
         </div>
+        <% include layout/sidebar.ejs %>
     </div>
-    
+</div>
+
 
 <% include layout/footer.ejs %>
