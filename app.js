@@ -1,13 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const path = require('path');
+const path = require("path");
 const mongoose = require("mongoose");
-const config = require('./config');
-const { News, Post } = require('./models');
-const PageError = require('./error.js');
-const routes = require('./routes');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const config = require("./config");
+const { News, Post } = require("./models");
+const PageError = require("./error.js");
+const routes = require("./routes");
+const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
 
 // database
 mongoose.Promise = global.Promise;
@@ -19,13 +19,13 @@ mongoose.connection
   .once("open", () => {
     const info = mongoose.connections[0];
     console.log(`Connected to ${info.host}:${info.port}/${info.name}`);
-    // require('./mocks')(); // генератор постов
+    // require("./mocks")(); // генератор постов
   });
 
-mongoose.connect(config.MONGO_URL, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true, 
-  useCreateIndex: true 
+mongoose.connect(config.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
 });
 
 // express
@@ -47,18 +47,18 @@ app.use(
 app.set("view engine", "ejs"); // работает с папкой views
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // обработка данных ajax-запросов в /routes
-app.use(express.static(path.join(__dirname, 'public'))); // конфиг доступа к файлам разработки
+app.use(express.static(path.join(__dirname, "public"))); // конфиг доступа к файлам разработки
 app.use(
-  '/js',
-  express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist'))
+  "/js",
+  express.static(path.join(__dirname, "node_modules", "jquery", "dist"))
 ); // jquery config + footer's jquery file connect
 
-app.use('/', routes.journal);
-app.use('/ajax', routes.auth);
-app.use('/post', routes.post);
+app.use("/", routes.journal);
+app.use("/ajax", routes.auth);
+app.use("/post", routes.post);
 
 // routes
-app.get('/about', (req, res) => {
+app.get("/about", (req, res) => {
   // получение данных коллекции из бд
   News.find({}).then(posts => {
     res.render("about", { posts });
@@ -77,13 +77,13 @@ app.post("/form", (req, res) => {
 });
 
 // catch 404 and forward to error handler
-app.use('/', (req, res, next) => {
-  next(new PageError('Page Not Found'))
+app.use("/", (req, res, next) => {
+  next(new PageError("Page Not Found"));
 });
 
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
-  res.render('error', {
+  res.render("error", {
     error
   });
 });

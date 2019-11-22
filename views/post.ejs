@@ -1,33 +1,33 @@
 <% include layout/header.ejs %>
 
 <div class="main">
-    <div class="container">
-        <div class="content">
-            <% if (post) { %>
-                <div class="post">
-                    <div class="top">
-                        <h1><%= post.title %></h1>
-                    </div>
-                    <div class="body">
-                        <p>
-                        <%= post.body %>
-                    </p>
-                    </div>
-                    <div class="bottom">
-                        <div class="author">
-                        Автор:
-                        <a href="/users/<%= post.author.login %>/page=1"><%= post.author.login %></a>
-                        </div>
-                        <a href="/">Комментарии</a>
-                    </div>
-                    <a href="/">← На главную</a>
-                </div>
-            <% } %>
-            
-
+  <div class="container">
+    <div class="content">
+      <% if (post) { %>
+      <div class="post">
+        <div class="top">
+          <h1><%= post.title %></h1>
         </div>
-        <% include layout/sidebar.ejs %>
+        <div class="body">
+          <p>
+            <%= post.body %>
+          </p>
+        </div>
+        <div class="bottom">
+          <div class="author">
+            Автор:
+            <a href="/users/<%= post.author.login %>/"
+              ><%= post.author.login %></a
+            >
+          </div>
+          <a href="/">Комментарии</a>
+        </div>
+        <a href="/">← На главную</a>
+      </div>
+      <% } %>
     </div>
+    <% include layout/sidebar.ejs %>
+  </div>
 </div>
 
 <% include layout/footer.ejs %>

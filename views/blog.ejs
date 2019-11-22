@@ -1,21 +1,19 @@
-<% if (posts) { %>
-    <% posts.forEach(function(post) { %>
-        <div class="post">
-            <div class="top">
-                <a href="/posts/<%= post.url %>"><h2><%= post.title %></h2></a>
-            </div>
-            <div class="body">
-                <p>
-                <%= post.body %>
-            </p>
-            </div>
-            <div class="bottom">
-                <div class="author">
-                Автор:
-                <a href="/users/<%= post.author.login %>"><%= post.author.login %></a>
-                </div>
-                <a href="/">Комментарии</a>
-            </div>
-        </div>
-    <% }) %>
-<% } %>
+<% if (posts) { %> <% posts.forEach(function(post) { %>
+<div class="post">
+  <div class="top">
+    <a href="/posts/<%= post.url %>"><h2><%= post.title %></h2></a>
+  </div>
+  <div class="body">
+    <p>
+      <%= post.body %>
+    </p>
+  </div>
+  <div class="bottom">
+    <div class="author">
+      Автор:
+      <a href="/users/<%= post.author.login %>/"><%= post.author.login %></a>
+    </div>
+    <a href="/">Комментарии</a>
+  </div>
+</div>
+<% }) %> <% } %>
