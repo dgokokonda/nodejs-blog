@@ -1,0 +1,31 @@
+<% include layout/header.ejs %>
+
+<div class="main">
+    <div class="container">
+        <div class="content">
+            <% if (post) { %>
+                <div class="post">
+                    <div class="top">
+                        <h1><%= post.title %></h1>
+                    </div>
+                    <div class="body">
+                        <p>
+                        <%= post.body %>
+                    </p>
+                    </div>
+                    <div class="bottom">
+                        <div class="author">
+                        Автор:
+                        <a href="/"><%= post.author %></a>
+                        </div>
+                        <a href="/">Комментарии</a>
+                    </div>
+                </div>
+            <% } %>
+
+        </div>
+        <% include layout/sidebar.ejs %>
+    </div>
+</div>
+
+<% include layout/footer.ejs %>

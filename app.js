@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require("mongoose");
 const config = require('./config');
 const { News, Post } = require('./models');
+const PageError = require('./error.js');
 const routes = require('./routes');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -21,7 +22,11 @@ mongoose.connection
     // require('./mocks')(); // генератор постов
   });
 
-mongoose.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+mongoose.connect(config.MONGO_URL, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true, 
+  useCreateIndex: true 
+});
 
 // express
 const app = express();
@@ -72,12 +77,14 @@ app.post("/form", (req, res) => {
 });
 
 // catch 404 and forward to error handler
-app.use((req, res) => {
-  const err = new Error('Page Not Found');
-  err.status = 404 || 500;
+app.use('/', (req, res, next) => {
+  next(new PageError('Page Not Found'))
+});
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
   res.render('error', {
-    message: err.message,
-    error: !config.IS_PRODUCTION ? err : {}
+    error
   });
 });
 
