@@ -2,7 +2,7 @@ const faker = require('faker');
 const TurndownService = require('turndown');
 const { Post } = require('./models');
 
-const author = '5dd69d1f37aedb2700c85170';
+const author = '5dd52f0e5dde6f26786562a4';
 
 module.exports = () => {
     Post.remove()

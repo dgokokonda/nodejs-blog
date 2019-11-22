@@ -16,12 +16,14 @@
                     <div class="bottom">
                         <div class="author">
                         Автор:
-                        <a href="/"><%= post.author %></a>
+                        <a href="/users/<%= post.author.login %>/page=1"><%= post.author.login %></a>
                         </div>
                         <a href="/">Комментарии</a>
                     </div>
+                    <a href="/">← На главную</a>
                 </div>
             <% } %>
+            
 
         </div>
         <% include layout/sidebar.ejs %>
