@@ -17,7 +17,7 @@ router.get("/add", (req, res) => {
 // });
 
 router.post("/publish", (req, res) => {
-  const { title, body, htmlData } = req.body;
+  const { title, body } = req.body;
   const turndownService = new TurndownService();
 
   if (!title || !body) {
@@ -41,7 +41,7 @@ router.post("/publish", (req, res) => {
   } else {
     Post.create({
       title: title.trim().replace(/ +(?= )/g, ""),
-      body: turndownService.turndown(htmlData),
+      body: turndownService.turndown(body),
       author: req.session.userId
     })
       .then(() => {

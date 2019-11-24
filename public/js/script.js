@@ -102,14 +102,6 @@ $(function() {
     });
   });
 
-  // MediumEditor
-  const editor = new MediumEditor("#post-body", {
-    placeholder: {
-      text: "",
-      hideOnClick: true
-    }
-  });
-
   $(".box form input").on("keydown", function(e) {
     if (e.key == "Enter") {
       $(this)
@@ -126,8 +118,7 @@ $(function() {
     var self = this;
     var data = {
       title: $("#post-title").val(),
-      body: $("#post-body").text(),
-      htmlData: $("#post-body").html()
+      body: $("#post-body").val()
     };
 
     $.ajax({
@@ -145,8 +136,7 @@ $(function() {
     var self = this;
     var data = {
       title: $("#post-title").val(),
-      body: $("#post-body").text(),
-      htmlData: $("#post-body").html()
+      body: $("#post-body").val()
     };
 
     $.ajax({
@@ -216,6 +206,28 @@ $(function() {
           }
         });
       }
+    });
+  }
+
+  // upload
+  if ($(".add-post").length) {
+    $("#upload").on("submit", function(e) {
+      e.preventDefault();
+
+      $.ajax({
+        type: "POST",
+        contentType: "multipart/form-data",
+        url: "/upload/image",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        success: function(data) {
+          console.log(data);
+        },
+        error: function(e) {
+          console.log(e);
+        }
+      });
     });
   }
 });

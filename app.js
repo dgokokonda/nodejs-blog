@@ -57,6 +57,7 @@ app.use("/", routes.journal);
 app.use("/ajax", routes.auth);
 app.use("/post", routes.post);
 app.use("/comment", routes.comment);
+app.use("/upload", routes.upload);
 
 // routes
 app.get("/about", (req, res) => {
