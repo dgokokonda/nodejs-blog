@@ -20,11 +20,32 @@
               ><%= post.author.login %></a
             >
           </div>
-          <a href="/">Комментарии</a>
+          <a href="/">Комментарии: <%= post.commentCount %></a>
         </div>
         <a href="/">← На главную</a>
       </div>
       <% } %>
+
+      <div class="comments" data-id="<%= post.id %>">
+        <h3>Комментарии</h3>
+        <a class="comment-title js-show-form">Оставить комментарий</a>
+        <form id="comment" name="comment" class="comment">
+          <textarea name="comment"></textarea>
+          <div class="btns">
+            <input
+              type="reset"
+              value="Отмена"
+              class="js-cancel-comment button button--left"
+            />
+            <button class="js-send-form button button--right">
+              Отправить
+            </button>
+          </div>
+        </form>
+        <div class="comments-list">
+          <%- include('layout/comments', {items: comments}); -%>
+        </div>
+      </div>
     </div>
     <% include layout/sidebar.ejs %>
   </div>

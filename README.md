@@ -8,7 +8,7 @@ Install package for encryption password data:
 https://github.com/shaneGirish/bcrypt-nodejs
 
 Install packages for work with sessions:
-https://github.com/expressjs/session 
+https://github.com/expressjs/session
 https://github.com/jdesboeufs/connect-mongo
 
 Install post's editor:
@@ -18,3 +18,5 @@ Install packages for posts'text transformation:
 https://github.com/domchristie/turndown
 https://github.com/talha-asad/mongoose-url-slugs
 https://github.com/vladzadvorny/transliter
+
+Model Tree Structures with Child References: [https://docs.mongodb.com/manual/tutorial/model-tree-structures-with-child-references/](https://docs.mongodb.com/manual/tutorial/model-tree-structures-with-child-references/)

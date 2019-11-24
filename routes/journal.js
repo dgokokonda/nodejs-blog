@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const moment = require("moment");
 const config = require("../config");
-const { Post, User } = require("../models");
+const { Post, User, Comment } = require("../models");
 const PageError = require("../error.js");
+
+moment.locale("ru");
 
 async function posts(req, res, user) {
   const perPage = Number(config.PER_PAGE);
@@ -47,8 +50,15 @@ router.get("/posts/:post", async (req, res, next) => {
       const post = await Post.findOne({ url }).populate("author");
 
       if (post) {
+        const comments = await Comment.find({
+          post: post.id,
+          parent: null
+          // parent: { $exists: false }
+        });
         res.render("post", {
           post,
+          comments,
+          moment,
           user: {
             user: req.session.userId,
             login: req.session.userLogin

@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const mongoose = require("mongoose");
 const config = require("./config");
-const { News, Post } = require("./models");
+const { News } = require("./models");
 const PageError = require("./error.js");
 const routes = require("./routes");
 const session = require("express-session");
@@ -56,6 +56,7 @@ app.use(
 app.use("/", routes.journal);
 app.use("/ajax", routes.auth);
 app.use("/post", routes.post);
+app.use("/comment", routes.comment);
 
 // routes
 app.get("/about", (req, res) => {
