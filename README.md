@@ -15,8 +15,8 @@ https://github.com/jdesboeufs/connect-mongo
 https://github.com/yabwe/medium-editor -->
 
 Install packages for posts'text transformation:
-https://github.com/domchristie/turndown
-https://github.com/talha-asad/mongoose-url-slugs
+<!-- https://github.com/domchristie/turndown
+https://github.com/talha-asad/mongoose-url-slugs -->
 https://github.com/vladzadvorny/transliter
 
 Model Tree Structures with Child References: [https://docs.mongodb.com/manual/tutorial/model-tree-structures-with-child-references/](https://docs.mongodb.com/manual/tutorial/model-tree-structures-with-child-references/)

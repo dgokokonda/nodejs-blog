@@ -63,18 +63,23 @@ app.use("/upload", routes.upload);
 app.get("/about", (req, res) => {
   // получение данных коллекции из бд
   News.find({}).then(posts => {
-    res.render("about", { posts });
+    res.render("about", { posts, user: { login: req.session.userLogin } });
   });
 });
 
-app.get("/form", (req, res) => res.render("form"));
+app.get("/form", (req, res) => {
+  res.render("form", { user: {login: req.session.userLogin } });
+});
 app.post("/form", (req, res) => {
   const { title, body } = req.body;
   // запись в бд
   News.create({
     title,
-    body
-  }).then(post => console.log(post.id));
+    body,
+    user: {
+      login: req.session.userLogin
+    }
+  });
   res.redirect("/about");
 });
 
@@ -88,6 +93,7 @@ app.use((error, req, res, next) => {
   res.render("error", {
     error
   });
+  next();
 });
 
 app.listen(config.PORT, () =>

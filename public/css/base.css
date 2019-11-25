@@ -359,7 +359,7 @@ textarea {
   outline: none;
 }
 
-.add-post form>p {
+.add-post form[name=upload]>p {
   position: absolute;
   width: calc(100% - 5px);
 }
