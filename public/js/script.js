@@ -112,42 +112,38 @@ $(function () {
     }
   });
 
-  // save to draft
-  $(".js-save-post").on("click", function (e) {
+  // publish post or save to draft
+  $(".js-publish-post, .js-save-post").on("click", function (e) {
     e.preventDefault();
-    var self = this;
-    var data = {
+    const self = this;
+    const isDraft = $(this).is('.js-save-post') ? true : false;
+    const data = {
       title: $("#post-title").val(),
-      body: $("#post-body").val()
+      body: $("#post-body").val(),
+      postId: $('#postId').val(),
+      isDraft
     };
 
     $.ajax({
       type: "POST",
       contentType: "application/json",
       data: JSON.stringify(data),
-      url: "/post/save"
-    }).done(function (data) {
-      const success = validateForm.call(self, data);
-    });
-  });
-  // publish post
-  $(".js-publish-post").on("click", function (e) {
-    e.preventDefault();
-    var self = this;
-    var data = {
-      title: $("#post-title").val(),
-      body: $("#post-body").val()
-    };
-
-    $.ajax({
-      type: "POST",
-      contentType: "application/json",
-      data: JSON.stringify(data),
-      url: "/post/publish"
+      url: "/post/add"
     }).done(function (data) {
       const success = validateForm.call(self, data);
       if (success) {
-        $(location).attr("href", "/");
+        switch (data.post.status) {
+          case 'draft':
+            $(location).attr('href', `/post/edit/${data.post.id}`);
+            break;
+
+          case 'published':
+            $(location).attr("href", `/posts/${data.post.url}`);
+            break;
+
+          default:
+            break;
+        }
       }
     });
   });
@@ -227,8 +223,8 @@ $(function () {
           validateForm.call(self, data);
           if (data.ok) {
             self.children()
-            .eq(0)
-            .before('<p class="success">Загрузка прошла успешно!</p>');
+              .eq(0)
+              .before('<p class="success">Загрузка прошла успешно!</p>');
           }
         },
         error: function (e) {
@@ -237,4 +233,7 @@ $(function () {
       });
     });
   }
+
+  // edit post
+
 });

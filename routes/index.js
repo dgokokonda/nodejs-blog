@@ -3,6 +3,7 @@ const post = require("./post");
 const journal = require("./journal");
 const comment = require("./comment");
 const upload = require("./upload");
+
 // список роутов
 module.exports = {
   auth,

@@ -267,6 +267,8 @@ input {
 textarea {
   padding: 8px 10px;
   min-height: 80px;
+  resize: vertical;
+  /* resize: none; */
 }
 
 /* auth/post styles */
@@ -527,4 +529,20 @@ input.error, textarea.error, .form-group>div.error {
 
 .upload-wrapper {
   display: inline-block;
+}
+
+/* icons */
+.post .top h2>a {
+  position: relative;
+}
+.post .top h2>a:after {
+  content: '🖉';
+  position: absolute;
+  color: #9a9a9a;
+  font-size: 25px;
+  margin-left: 25px;
+}
+
+.post .top h2>a:hover:after {
+  color: #8a8989;
 }

@@ -12,8 +12,8 @@ module.exports = () => {
         const turndownService = new TurndownService();
 
         Post.create({
-          title: faker.lorem.words(10),
-          body: turndownService.turndown(faker.lorem.words(100)),
+          title: faker.lorem.words(5),
+          body: turndownService.turndown(faker.lorem.words(40)),
           author
         })
           .then(console.log)

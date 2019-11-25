@@ -10,7 +10,7 @@ moment.locale("ru");
 async function posts(req, res, user) {
   const perPage = Number(config.PER_PAGE);
   const page = req.params.page || 1;
-  const findUser = user && user.id ? { author: user.id } : {};
+  const findUser = user && user.id ? { author: user.id, status: 'published' } : { status: 'published' };
   const path = user && user.id ? `/users/${req.params.login}` : "";
 
   try {
@@ -29,7 +29,7 @@ async function posts(req, res, user) {
       pages: Math.ceil(count / perPage),
       user: {
         // передаем данные из сессии
-        user: req.session.userId,
+        id: req.session.userId,
         login: req.session.userLogin
       }
     });
@@ -47,7 +47,10 @@ router.get("/posts/:post", async (req, res, next) => {
     next(new PageError("Page Not Found"));
   } else {
     try {
-      const post = await Post.findOne({ url }).populate("author");
+      const post = await Post.findOne({
+        url,
+        status: 'published'
+      }).populate("author");
 
       if (post) {
         const comments = await Comment.find({

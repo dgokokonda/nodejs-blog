@@ -16,8 +16,10 @@ router.get("/add", (req, res) => {
 //     console.log(req.body)
 // });
 
-router.post("/publish", (req, res) => {
-  const { title, body } = req.body;
+// publish or save to draft
+router.post("/add", async (req, res) => {
+  const { title, body, postId, isDraft } = req.body;
+  const { userId } = req.session;
   const turndownService = new TurndownService();
 
   if (!title || !body) {
@@ -39,23 +41,85 @@ router.post("/publish", (req, res) => {
       fields: ["post-body"]
     });
   } else {
-    Post.create({
-      title: title.trim().replace(/ +(?= )/g, ""),
-      body: turndownService.turndown(body),
-      author: req.session.userId
-    })
-      .then(() => {
-        res.json({
-          ok: true
+    try {
+      if (postId) {
+        // редактируемый пост можно сохранить в черновик или опубликовать
+        const post = await Post.findOneAndUpdate(
+          {
+            _id: postId,
+            author: userId
+          },
+          {
+            title,
+            body,
+            // url,
+            author: userId,
+            status: isDraft ? 'draft' : 'published'
+          },
+          {
+            new: true
+          }
+        );
+
+        if (!post) {
+          res.json({
+            ok: false,
+            error: 'Пост может редактироваться только его автором!'
+          });
+        } else {
+          res.json({
+            ok: true,
+            post
+          });
+        }
+      } else {
+        // новый пост
+        const post = await Post.create({
+          title: title.trim().replace(/ +(?= )/g, ""),
+          body: turndownService.turndown(body),
+          author: userId,
+          // url
         });
-      })
-      .catch(err => {
-        console.log(err);
+
         res.json({
-          ok: false,
-          error: "Ошибка, попробуйте позже!"
+          ok: true,
+          post
         });
+      }
+
+    }
+    catch (err) {
+      console.log(err);
+      res.json({
+        ok: false,
+        error: "Ошибка, попробуйте позже!"
       });
+    }
+  }
+});
+
+router.get('/edit/:id', async (req, res, next) => {
+  const id = req.params.id.trim().replace(/ +(?= )/g, "");
+
+  try {
+    const post = await Post.findById(id);
+
+    if (!post) {
+      const err = new Error('Not Found');
+      err.status = 404;
+      next(err);
+    }
+
+    res.render("post/add", {
+      post,
+      user: {
+        id: req.session.userId,
+        login: req.session.userLogin
+      }
+    });
+  }
+  catch (err) {
+    console.log(err);
   }
 });
 

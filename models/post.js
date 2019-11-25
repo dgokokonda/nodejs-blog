@@ -17,6 +17,12 @@ const schema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User"
     },
+    status: {
+      type: String,
+      enum: ['published', 'draft'],
+      required: true,
+      default: 'published'
+    },
     commentCount: {
       type: Number,
       default: 0
