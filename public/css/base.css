@@ -17,7 +17,7 @@ body {
   background-color: #e8e8e8;
 }
 
-body > .wrapper {
+body>.wrapper {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 100px);
@@ -38,10 +38,7 @@ p {
   margin-bottom: 1.3em;
 }
 
-h1,
-h2,
-h3,
-h4 {
+h1, h2, h3, h4 {
   margin: 0 0 0.5em;
   font-weight: inherit;
   line-height: 1.2;
@@ -60,8 +57,7 @@ h3 {
   font-size: 1.563em;
 }
 
-small,
-.font_small {
+small, .font_small {
   font-size: 0.8em;
 }
 
@@ -122,8 +118,7 @@ small,
   flex-direction: column;
 }
 
-.box,
-.add-post {
+.box, .add-post {
   margin-bottom: 15px;
   padding: 15px;
   width: 100%;
@@ -143,11 +138,6 @@ small,
   .content {
     /* margin-right: 0; */
     margin-bottom: 15px;
-  }
-  .sidebar {
-    /* flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-start; */
   }
   .box {
     margin-right: 15px;
@@ -179,6 +169,7 @@ small,
 .container form {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .form-group {
@@ -219,8 +210,7 @@ small,
   background-color: #1a8ef3;
 }
 
-input,
-textarea {
+input, textarea {
   background-color: #ffffff;
   border: 1px solid #e8e8e8;
   display: table;
@@ -234,23 +224,19 @@ input {
   width: 100%;
 }
 
-input:disabled,
-textarea:disabled {
+input:disabled, textarea:disabled {
   background-color: #e8e8e8;
 }
 
-input:hover,
-textarea:hover {
+input:hover, textarea:hover {
   box-shadow: 0;
 }
 
-input:focus,
-textarea:focus {
+input:focus, textarea:focus {
   border-color: lighten(#08aef1, 40%);
 }
 
-input::placeholder,
-textarea::placeholder {
+input::placeholder, textarea::placeholder {
   opacity: 0.8;
   font-style: italic;
 }
@@ -259,12 +245,19 @@ form {
   line-height: 36px;
 }
 
-form p.error {
-  color: #ff2222;
+form p.error, form p.success {
   font-weight: bold;
   margin: 0;
   line-height: 18px;
   padding: 5px 0;
+}
+
+form p.error {
+  color: #ff2222;
+}
+
+form p.success {
+  color: #48cc4c;
 }
 
 input {
@@ -343,6 +336,10 @@ textarea {
   margin-bottom: 30px;
 }
 
+.add-post form:first-child {
+  margin-bottom: 15px;
+}
+
 .add-post .btns {
   display: flex;
   justify-content: flex-end;
@@ -352,7 +349,7 @@ textarea {
   margin-left: 30px;
 }
 
-.form-group > div {
+.form-group>div {
   min-height: 200px;
   background-color: #ffffff;
   border: 1px solid #e8e8e8;
@@ -360,18 +357,27 @@ textarea {
   outline: none;
 }
 
-.add-post form > p.error {
+.add-post form>p {
+  position: absolute;
+  width: calc(100% - 5px);
+}
+
+.add-post form>p.error {
   padding: 5px 0 5px 5px;
   background: #ffdcd6;
 }
 
-input.error,
-textarea.error,
-.form-group > div.error {
+.add-post form>p.success {
+  background: #baff9e;
+  padding: 5px 0 5px 5px;
+}
+
+input.error, textarea.error, .form-group>div.error {
   border: 1px solid #ff2222;
 }
 
 /* pagination */
+
 .pagination {
   text-align: center;
 }
@@ -408,6 +414,7 @@ textarea.error,
   margin-right: 20px;
   text-align: right;
 }
+
 .old {
   margin-left: 20px;
   text-align: left;
@@ -419,10 +426,12 @@ textarea.error,
 }
 
 /* comments */
+
 .comments {
   background: #fff;
   padding: 15px;
 }
+
 .comments form {
   display: none;
 }
@@ -450,12 +459,13 @@ textarea.error,
   border-left: 1px solid #e8e8e8;
   padding-left: 32px;
 }
+
 .comments-list ul:first-child {
   padding-left: 0;
   border-left: 0;
 }
 
-.comments-list > ul > li {
+.comments-list>ul>li {
   margin-bottom: 15px;
 }
 
@@ -463,9 +473,11 @@ textarea.error,
   display: flex;
   flex-direction: column;
 }
+
 .comments-list .head {
   display: flex;
 }
+
 .comments-list .date {
   margin-left: 10px;
   font-style: italic;
@@ -477,23 +489,29 @@ textarea.error,
 .comments-list .head {
   line-height: 14px;
 }
+
 .comments-list .head a {
   color: #08aef1;
 }
+
 .comments-list .link {
   margin-left: 5px;
   color: #08aef1;
   cursor: pointer;
 }
+
 .comments-list .link:hover {
   text-decoration: underline;
 }
 
 /* upload */
+
 .upload {
-  margin-top: 10px;
+  margin-top: 38px;
+  /*10px*/
   text-align: right;
 }
+
 .upload input {
   width: auto;
   float: left;

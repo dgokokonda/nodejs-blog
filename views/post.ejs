@@ -20,13 +20,13 @@
               ><%= post.author.login %></a
             >
           </div>
-          <a href="/">Комментарии: <%= post.commentCount %></a>
+          <a href="/posts/<%= post.url %>#<%= post.id %>">Комментарии: <%= post.commentCount %></a>
         </div>
         <a href="/">← На главную</a>
       </div>
       <% } %>
 
-      <div class="comments" data-id="<%= post.id %>">
+      <div class="comments" id="<%= post.id %>">
         <h3>Комментарии</h3>
         <a class="comment-title js-show-form">Оставить комментарий</a>
         <form id="comment" name="comment" class="comment">

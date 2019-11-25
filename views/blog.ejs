@@ -13,7 +13,7 @@
       Автор:
       <a href="/users/<%= post.author.login %>/"><%= post.author.login %></a>
     </div>
-    <a href="/">Комментарии: <%= post.commentCount %></a>
+    <a href="/posts/<%= post.url %>#<%= post.id %>">Комментарии: <%= post.commentCount %></a>
   </div>
 </div>
 <% }) %> <% } %>

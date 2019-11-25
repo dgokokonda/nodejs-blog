@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { Comment } = require("../models");
+const { Comment, Post } = require("../models");
 
 router.post("/add", async (req, res) => {
   const userId = req.session.userId;
@@ -23,16 +23,21 @@ router.post("/add", async (req, res) => {
           fields: ["comment"]
         });
       } else {
+        const findedPost = await Post.findById(post);
+        
         if (!parent) {
           // комменты 0го уровня
-          await Comment.create({
+          const newComment = await Comment.create({
             comment,
             post,
             author: userId,
             parent
           });
+
           res.json({
-            ok: true
+            ok: true,
+            url: `/posts/${findedPost.url}#${newComment.id}`,
+            // id:  newComment.id
           });
         } else {
           const parentComment = await Comment.findById(parent);
@@ -55,8 +60,12 @@ router.post("/add", async (req, res) => {
           children.push(newComment.id);
           parentComment.children = children;
           await parentComment.save();
+          
+          
           res.json({
-            ok: true
+            ok: true,
+            url: `/posts/${findedPost.url}#${newComment.id}`,
+            // id:  newComment.id
           });
         }
       }
