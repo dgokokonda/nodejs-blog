@@ -28,7 +28,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "faker": "^4.1.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "mongoose": "^5.7.11",
     "mongoose-autopopulate": "^0.9.1",
